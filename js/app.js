@@ -1,207 +1,128 @@
 
+'use strict';
 
-function RandomNumber(min, max) {
-    var x = Math.random();
-    return Math.floor(x * (max - min + 1)) + min;
+var operatingHours = ['6 am', '7 am', '8  am', '9 am', '10 m', '11 am', '12  pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm'];
+
+//----------------------->random number generator
+
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var times = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+//----------------------->function to render to hr in table
 
-///FIRST CITY
+function makeTableHeader(){
+  var table = document.getElementById('SalesReport');
+  var tableHeader = document.createElement('tr');
+  var tableStoreHeading = document.createElement('th');
+  tableStoreHeading.textContent = 'Store';
+  tableHeader.appendChild(tableStoreHeading);
 
-var seattle = {
-    location: 'Seattle',
-    maxHrCust: 65,
-    minHrCust: 23,
-    avgCookPerCust: 6.3,
-    randomCustperHr: RandomNumber(this.minHrCust, this.maxHrCust), total: 0,
+  for (var i = 0; i < operatingHours.length; i++){
+    var tableHourHeadings = document.createElement('th');
+    tableHourHeadings.textContent = operatingHours[i];
+    tableHeader.appendChild(tableHourHeadings);
+  }
+  var tableDailyTotalHeading = document.createElement('th');
+  tableDailyTotalHeading.textContent = 'Daily Location Total';
+  tableHeader.appendChild(tableDailyTotalHeading);
 
-    renderedArray: function () {
+  table.appendChild(tableHeader);
+}
 
-        var parentElement = document.getElementById('SalesReport');
+//------------------------->a footer for table with daily total sales by hour
 
-        var article = document.createElement('article');
-        parentElement.appendChild(article);
+function makeTableFooter(){
+  var table = document.getElementById('SalesReport');
+  var tableFooter = document.createElement('tr');
+  var tableHourlyTotalFooter = document.createElement('th');
+  tableHourlyTotalFooter.textContent = 'Hourly totals';
+  tableFooter.appendChild(tableHourlyTotalFooter);
 
-        var h2 = document.createElement('h2');
-        h2.textContent = this.location;
-        article.appendChild(h2);
+  for (var i = 0; i < operatingHours.length; i++){
+    var tableFooterTotals = document.createElement('td');
+    tableFooterTotals.textContent = seattle.dailyHrSales[i] + tokyo.dailyHrSales[i] + dubai.dailyHrSales[i] + paris.dailyHrSales[i] + lima.dailyHrSales[i]; 
+    tableFooter.appendChild(tableFooterTotals);
+  }
+  var tableFooterAllUpTotal = document.createElement('th');
+  tableFooterAllUpTotal.textContent = seattle.dailyTotalSales + tokyo.dailyTotalSales + dubai.dailyTotalSales + paris.dailyTotalSales + lima.dailyTotalSales;
+  tableFooter.appendChild(tableFooterAllUpTotal);
 
-        var ul = document.createElement('ul');
-        article.appendChild(ul);
+  table.appendChild(tableFooter);
+}
 
-        for (var i = 0; i <= times.length; i++) {
+//---------------------->create function to render store info to a table
 
-            var li = document.createElement('li');
-            this.randomCustperHr = RandomNumber(this.minHrCust, this.maxHrCust);
-            this.total = this.total + this.randomCustperHr * Math.floor(this.avgCookPerCust);
-            li.textContent = times[i] + ' :' + this.randomCustperHr * Math.floor(this.avgCookPerCust) + ' Cookies';
+function renderStoreInTable() {
+  
+  var table = document.getElementById('SalesReport'); // grandparent
 
-            ul.appendChild(li);
-        }
-        li.textContent = 'total : ' + this.total + ' Cookies';
-    }
+  // new child element in the parent
+  var tableRow = document.createElement('tr');
 
+  var tableCell = document.createElement('th'); //new (grand) child element
+  tableCell.textContent = this.location;
+  tableRow.appendChild(tableCell); 
 
+  for (var i = 0; i < this.dailyHrSales.length; i++) {
+
+    tableCell = document.createElement('td');
+    tableCell.textContent = this.dailyHrSales[i];
+    tableRow.appendChild(tableCell); 
+  }
+  var tableCellTotal = document.createElement('th');
+  tableCellTotal.textContent = this.dailyTotalSales;
+  tableRow.appendChild(tableCellTotal);
+  table.appendChild(tableRow); 
+}
+
+//---------------------> constructors
+
+function Store(id, location, minNum, maxNum, avgCookiePerCust) {
+  this.id = id;
+  this.location = location ;
+  this.minNum = minNum;
+  this.maxNum = maxNum;
+  this.avgCookiePerCust = avgCookiePerCust;
+  this.dailyHrSales = [];
+  this.dailyTotalSales = 0;
+}
+//---------------> hourlyCookieSales
+
+Store.prototype.hourlyCookieSales = function () {
+  for (var i = 0; i < operatingHours.length; i++) {
+    var footTraffic = generateRandomNumber(this.minNum, this.maxNum);
+    var hourlySalesTotal = Math.round(footTraffic * this.avgCookiePerCust);
+    this.dailyHrSales.push(hourlySalesTotal);
+    this.dailyTotalSales += hourlySalesTotal;
+  }
 };
-seattle.renderedArray();
+//--------------> attach renderStoreInTable method to Store constructor
+Store.prototype.renderStoreInTable = renderStoreInTable;
 
-///SECOND CITY
+//-------------------> Creating stores from constructor
+var seattle = new Store('seattle-table', 'Seattle', 23, 64, 6.3);
+var tokyo = new Store('tokyo-table', 'Tokyo', 3, 24, 1.2);
+var dubai = new Store('dubai-table', 'Dubai', 11, 38, 3.7);
+var paris = new Store('paris-table', 'Paris', 20, 38, 2.3);
+var lima = new Store('lima-table', 'Lima', 2, 16, 4.6);
 
-var tokyo = {
-    location: 'Tokyo',
-    maxHrCust: 24,
-    minHrCust: 3,
-    avgCookPerCust: 1.2,
-    randomCustperHr: RandomNumber(this.minHrCust, this.maxHrCust), total: 0,
+// words
+makeTableHeader();
 
-    renderedArray: function () {
+seattle.hourlyCookieSales(); 
+seattle.renderStoreInTable();
 
-        var parentElement = document.getElementById('SalesReport');
+tokyo.hourlyCookieSales();
+tokyo.renderStoreInTable();
 
-        var article = document.createElement('article');
-        parentElement.appendChild(article);
+dubai.hourlyCookieSales();
+dubai.renderStoreInTable();
 
-        var h2 = document.createElement('h2');
-        h2.textContent = this.location;
-        article.appendChild(h2);
+paris.hourlyCookieSales();
+paris.renderStoreInTable();
 
-        var ul = document.createElement('ul');
-        article.appendChild(ul);
+lima.hourlyCookieSales();
+lima.renderStoreInTable();
 
-        for (var i = 0; i <= times.length; i++) {
-
-            var li = document.createElement('li');
-            this.randomCustperHr = RandomNumber(this.minHrCust, this.maxHrCust);
-            this.total = this.total + this.randomCustperHr * Math.floor(this.avgCookPerCust);
-            li.textContent = times[i] + ' :' + this.randomCustperHr * Math.floor(this.avgCookPerCust) + ' Cookies';
-
-            ul.appendChild(li);
-        }
-        li.textContent = 'total : ' + this.total + ' Cookies';
-    }
-
-
-};
-tokyo.renderedArray();
-
-///THIRD CITY
-
-var dubai = {
-    location: 'Dubai',
-    maxHrCust: 38,
-    minHrCust: 11,
-    avgCookPerCust: 3.7,
-    randomCustperHr: RandomNumber(this.minHrCust, this.maxHrCust), total: 0,
-
-    renderedArray: function () {
-
-        var parentElement = document.getElementById('SalesReport');
-
-        var article = document.createElement('article');
-        parentElement.appendChild(article);
-
-        var h2 = document.createElement('h2');
-        h2.textContent = this.location;
-        article.appendChild(h2);
-
-        var ul = document.createElement('ul');
-        article.appendChild(ul);
-
-        for (var i = 0; i <= times.length; i++) {
-
-            var li = document.createElement('li');
-            this.randomCustperHr = RandomNumber(this.minHrCust, this.maxHrCust);
-            this.total = this.total + this.randomCustperHr * Math.floor(this.avgCookPerCust);
-            li.textContent = times[i] + ' :' + this.randomCustperHr * Math.floor(this.avgCookPerCust) + ' Cookies';
-
-            ul.appendChild(li);
-        }
-        li.textContent = 'total : ' + this.total + ' Cookies';
-    }
-
-
-};
-//console.table(dubai);
-dubai.renderedArray();
-
-///FOURTH CITY
-
-var paris = {
-    location: 'Paris',
-    maxHrCust: 38,
-    minHrCust: 20,
-    avgCookPerCust: 2.3,
-    randomCustperHr: RandomNumber(this.minHrCust, this.maxHrCust), total: 0,
-
-    renderedArray: function () {
-
-        var parentElement = document.getElementById('SalesReport');
-
-        var article = document.createElement('article');
-        parentElement.appendChild(article);
-
-        var h2 = document.createElement('h2');
-        h2.textContent = this.location;
-        article.appendChild(h2);
-
-        var ul = document.createElement('ul');
-        article.appendChild(ul);
-
-        for (var i = 0; i <= times.length; i++) {
-
-            var li = document.createElement('li');
-            this.randomCustperHr = RandomNumber(this.minHrCust, this.maxHrCust);
-            this.total = this.total + this.randomCustperHr * Math.floor(this.avgCookPerCust);
-            li.textContent = times[i] + ' :' + this.randomCustperHr * Math.floor(this.avgCookPerCust) + ' Cookies';
-
-            ul.appendChild(li);
-        }
-        li.textContent = 'total : ' + this.total + ' Cookies';
-    }
-
-
-};
-//console.table(paris);
-paris.renderedArray();
-
-///FIFTH CITY
-
-var lima = {
-    location: 'Lima',
-    maxHrCust: 16,
-    minHrCust: 2,
-    avgCookPerCust: 4.6,
-    randomCustperHr: RandomNumber(this.minHrCust, this.maxHrCust), total: 0,
-
-    renderedArray: function () {
-
-        var parentElement = document.getElementById('SalesReport');
-
-        var article = document.createElement('article');
-        parentElement.appendChild(article);
-
-        var h2 = document.createElement('h2');
-        h2.textContent = this.location;
-        article.appendChild(h2);
-
-        var ul = document.createElement('ul');
-        article.appendChild(ul);
-
-        for (var i = 0; i <= times.length; i++) {
-
-            var li = document.createElement('li');
-            this.randomCustperHr = RandomNumber(this.minHrCust, this.maxHrCust);
-            this.total = this.total + this.randomCustperHr * Math.floor(this.avgCookPerCust);
-            li.textContent = times[i] + ' :' + this.randomCustperHr * Math.floor(this.avgCookPerCust) + ' Cookies';
-
-            ul.appendChild(li);
-        }
-        li.textContent = 'total : ' + this.total + ' Cookies';
-    }
-
-
-};
-//console.table(lima);
-lima.renderedArray();
-
+makeTableFooter();
