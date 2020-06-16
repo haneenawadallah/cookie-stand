@@ -1,7 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 
+li{
+  display: inline;
+  margin: 30px;
 
-nav li{
+}
+a {
+  color: black;
+  text-decoration: black;
+ }
+body {
+  margin: 0;
+  background-color: rgb(224, 187, 184);
+  font-family: 'Quicksand', sans-serif;
+
+}
+li{
     display: inline;
     margin: 30px;
     
@@ -11,17 +25,14 @@ a {
    text-decoration: black;
   }
   
-img {
+.logo {
     opacity: 70%;
     max-height: 150px;
     max-width: 200px;
     width: 160px;
-    height: 100px; 
+
 }
-body {
-    background-color: rgb(224, 187, 184);
-    font-family: 'Quicksand', sans-serif;
-  }
+
   
   header, footer {
     background-color: rgb(168, 129, 126);;
