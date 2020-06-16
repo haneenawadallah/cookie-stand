@@ -1,5 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap'); /*h1*/
+
+h1 {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 50px;
+}
+h2{
+  font-family: 'Architects Daughter', cursive;
+  font-weight: bolder;
+  font-size: xx-large;
+  text-align: center;
+}
+
+p{
+  font-family: 'Architects Daughter', cursive;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
 li{
   display: inline;
   margin: 30px;
@@ -8,10 +26,11 @@ li{
 a {
   color: black;
   text-decoration: black;
+  font-weight: bold;
  }
 body {
   margin: 0;
-  background-color: rgb(224, 187, 184);
+  background-color: rgb(250, 242, 242);
   font-family: 'Shadows Into Light', cursive;
   /*font-family: 'Quicksand', sans-serif;*/
 
@@ -21,11 +40,13 @@ li{
     margin: 30px;
     
 }
-a {
-   color: black;
-   text-decoration: black;
-  }
+hr {
+  border: solid;
+  color: rgb(204, 199, 189);
+  background-color:  rgb(204, 199, 189);
   
+ 
+}
 .logo {
     opacity: 70%;
     max-height: 150px;
@@ -34,12 +55,19 @@ a {
 
 }
 
+footer img {
+  opacity: 70%;
+    max-height: 150px;
+    max-width: 200px;
+    width: 160px;
+}
   
   header, footer {
-    background-color: rgb(168, 129, 126);;
+    background-color: rgb(99, 108, 116);;
     border-top: solid; color:rgb(15, 27, 15);
     border-bottom: solid; color:rgb(19, 37, 19);
     text-align: center;
+    position: relative;
   }
   
   header {
@@ -62,5 +90,58 @@ a {
   }
  
 
+  .locations ul {
+    width: 100%;
+    overflow: hidden;
+    margin-left: 20px;
+   }
   
+  .locations ul li{
+    float: left;
+    list-style-type: none;
+    margin-left: 20px;
+    text-align: left;
+  }
+  
+  .locations img {
+    border: solid rgb(15, 15, 15);
+    border-width: thin;
+    margin: 5px;
+    filter: grayscale(10%);
+    max-height: 150px;
+    max-width: 200px;
+    width: 120px;
+    height: 120px;
+  }
+  .product ul {
+    width: 100%;
+    overflow: hidden;
+    margin-left: 20px;
+   }
+  
+  .product ul li{
+    float: left;
+    list-style-type: none;
+    margin-left: 20px;
+    text-align: center;
+  }
+  
+  .product img {
+    border: solid rgb(15, 15, 15);
+    border-width: thin;
+    margin: 10px;
+    max-height: 200px;
+    max-width: 250px;
+    width: 160px;
+    height: 160px;
+  }
+  
+ .story img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  max-height: 600px;
+  max-width: 600px;
+ }
   
