@@ -53,7 +53,7 @@ function makeTableFooter(){
 
 //---------------------->create function to render store info to a table
 
-function renderStoreInTable() {
+Store.prototype.renderStoreInTable = function() {
   
   var table = document.getElementById('SalesReport'); // grandparent
 
@@ -76,10 +76,26 @@ function renderStoreInTable() {
   table.appendChild(tableRow); 
 }
 
+//------------------------------> from form to table
+var newStore = document.getElementById('newCities');
+newStore.addEventListener ('submit', newStoreInfo);
+function newStoreInfo(event){
+event.preventDefault();
+var eventLocation = event.target.citname.value;
+var eventMin = event.target.minn.value;
+var eventMax = event.target.maxx.value;
+var eventAvg = event.target.avg.value;
+var newStore1 = new Store (eventLocation, eventMin, eventMax, eventAvg);
+console.log(newStore1);
+newStore1.hourlyCookieSales();
+newStore1.renderStoreInTable();
+makeTableFooter();
+}
+
 //---------------------> constructors
 
-function Store(id, location, minNum, maxNum, avgCookiePerCust) {
-  this.id = id;
+function Store( location, minNum, maxNum, avgCookiePerCust) {
+
   this.location = location ;
   this.minNum = minNum;
   this.maxNum = maxNum;
@@ -98,14 +114,14 @@ Store.prototype.hourlyCookieSales = function () {
   }
 };
 //--------------> attach renderStoreInTable method to Store constructor
-Store.prototype.renderStoreInTable = renderStoreInTable;
 
 //-------------------> Creating stores from constructor
-var seattle = new Store('seattle-table', 'Seattle', 23, 64, 6.3);
-var tokyo = new Store('tokyo-table', 'Tokyo', 3, 24, 1.2);
-var dubai = new Store('dubai-table', 'Dubai', 11, 38, 3.7);
-var paris = new Store('paris-table', 'Paris', 20, 38, 2.3);
-var lima = new Store('lima-table', 'Lima', 2, 16, 4.6);
+
+var seattle = new Store('Seattle', 23, 64, 6.3);
+var tokyo = new Store( 'Tokyo', 3, 24, 1.2);
+var dubai = new Store( 'Dubai', 11, 38, 3.7);
+var paris = new Store( 'Paris', 20, 38, 2.3);
+var lima = new Store( 'Lima', 2, 16, 4.6);
 
 // words
 makeTableHeader();
