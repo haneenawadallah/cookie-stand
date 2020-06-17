@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New City Sales</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+</head>
+<header>
+        <div class = navbar>
+            <h1>Salmon Cookies  </h1>
+            <img class =logo src="images/salmon.png">
+
+            <nav>
+                <ul class = links>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="">Products</a>
+                    </li>
+                    <li>
+                        <a href="">About</a>
+                    </li>
+                    <li>
+                        <a href="sales.html">Sales</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+</header>
+<body>
+    <form id="newCities">
+        <fieldset>
+            <legend>New city</legend>
+            <label for="CName">City Name</label>
+            <input type="text" id="citname"required>
+            <br>
+            <label for="cityMin">Min</label>
+            <input type="number" id="minn">
+            <br>
+            <label for="cityMax">Max</label>
+            <input type="number" id="maxx"required>
+            <br>
+            <label for="cityAvg">AVG</label>
+            <input type="text" id="avg"required>
+            <br>
+            <input type="submit" id="sub"required>  
+        </fieldset>
+      </form>
+      <script src="js/app.js"></script>
+</body>
+</html>
